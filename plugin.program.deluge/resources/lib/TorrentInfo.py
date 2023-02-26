@@ -25,6 +25,7 @@ class TorrentInfo(object):
     downloadPayloadRate = 0
     uploadPayloadRate = 0
     eta = 0
+    timeAdded = 0
     
     def getStrSize(self):
         size = int(self.totalSize) / (1024*1024)

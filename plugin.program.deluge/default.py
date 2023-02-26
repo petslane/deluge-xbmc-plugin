@@ -1,5 +1,6 @@
 import urllib, sys, os, re, time
 import xbmcaddon, xbmcplugin, xbmcgui, xbmc
+from datetime import datetime
 
 # Plugin constants 
 __addonname__ = "DelugeXBMCPlugin"
@@ -26,6 +27,8 @@ import json
 from DelugeWebUI import DelugeWebUI
 from Filter import Filter
 from States import States
+
+addon_handle    = int(sys.argv[1])
 
 webUI = DelugeWebUI(url)
 	
@@ -63,7 +66,9 @@ def listTorrents(torrentList, stateName):
 			addTorrent(torrentInfo.name + " " + getTranslation(30001) + str(torrentInfo.progress)+"% "+getTranslation(30002) + torrentInfo.getStrSize() + " " + getTranslation(30003) + str(torrentInfo.downloadPayloadRate) + "Kb/s " + getTranslation(30004) + str(torrentInfo.uploadPayloadRate)+"Kb/s " + getTranslation(30005) + torrentInfo.getStrEta(), url, mode, thumb, torrentInfo.torrentId)
 			mode = mode + 1
 	#xbmc.executebuiltin('Container.SetViewMode(500)') # 55 - List; 
-	xbmcplugin.endOfDirectory(int(sys.argv[1]), cacheToDisc=False)
+	xbmcplugin.addSortMethod(addon_handle, xbmcplugin.SORT_METHOD_DATEADDED)
+	xbmcplugin.addSortMethod(addon_handle, xbmcplugin.SORT_METHOD_TITLE)
+	xbmcplugin.endOfDirectory(addon_handle, cacheToDisc=False)
 
 def performAction(selection):
 	restoreSession()
@@ -139,13 +144,17 @@ def get_params():
 def getTranslation(translationId):
     return __language__(translationId).encode('utf8')
 
-def addTorrent(name, url, mode, iconimage, hashNum):
+def addTorrent(name, url, mode, iconimage, hashNum, timeAdded):
     u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&name="+urllib.quote_plus(name)+"&hashNum="+str(hashNum)
     ok = True
     point = xbmcgui.ListItem(name,thumbnailImage=iconimage)
+    point.setInfo('video', {
+        'dateadded': datetime.fromtimestamp(timeAdded).isoformat().replace('T', ' '),
+        'title': name
+    })
     rp = "XBMC.RunPlugin(%s?mode=%s)"
     point.addContextMenuItems([(getTranslation(32011), rp % (sys.argv[0], 1000)), (getTranslation(32012), rp % (sys.argv[0], 1001))], replaceItems=True)
-    ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=u,listitem=point,isFolder=False)
+    ok = xbmcplugin.addDirectoryItem(handle=addon_handle,url=u,listitem=point,isFolder=False)
 	
 def addFilters(filter, mode, label):
 	iconimage = ''
@@ -161,7 +170,7 @@ def addFilters(filter, mode, label):
 	liz.setInfo( type="Video", infoLabels = {"Title": displayName} )
 	rp = "XBMC.RunPlugin(%s?mode=%s)"
 	liz.addContextMenuItems([(getTranslation(32011), rp % (sys.argv[0], 1000)), (getTranslation(32012), rp % (sys.argv[0], 1001))], replaceItems=True)
-	ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz, isFolder=True)
+	ok = xbmcplugin.addDirectoryItem(handle=addon_handle, url=u, listitem=liz, isFolder=True)
 
 def addStateFilters(states, label):
 	for state in states:
@@ -177,7 +186,7 @@ def listFilters():
 		if label.count > 0:
 			addFilters(label, 5005, label)
 	
-	xbmcplugin.endOfDirectory(int(sys.argv[1]), cacheToDisc=False)
+	xbmcplugin.endOfDirectory(addon_handle, cacheToDisc=False)
 		
 def getParams():
 	global url, name, mode, hashNum, filterName, filterCount, labelName, labelCount
@@ -245,7 +254,7 @@ if mode == 5005:
 		addStateFilters(states, label)
 	else:
 		listTorrents(torrents, States.All)
-	xbmcplugin.endOfDirectory(int(sys.argv[1]), cacheToDisc=False)
+	xbmcplugin.endOfDirectory(addon_handle, cacheToDisc=False)
 	
 
 elif mode == 1000:
