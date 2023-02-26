@@ -63,7 +63,20 @@ def listTorrents(torrentList, stateName):
 			else:
 				thumb = os.path.join(__icondir__, 'unknown.png')
 			url = baseurl
-			addTorrent(torrentInfo.name + " " + getTranslation(30001) + str(torrentInfo.progress)+"% "+getTranslation(30002) + torrentInfo.getStrSize() + " " + getTranslation(30003) + str(torrentInfo.downloadPayloadRate) + "Kb/s " + getTranslation(30004) + str(torrentInfo.uploadPayloadRate)+"Kb/s " + getTranslation(30005) + torrentInfo.getStrEta(), url, mode, thumb, torrentInfo.torrentId)
+			name = '[B]{name}[/B]   [LIGHT]{progress_label} {progress_value}% | {size_label} {size_value} | {down_label} {down_value} | {up_label} {up_value} | {eta_label} {eta_value}[/LIGHT]'.format(
+				name=torrentInfo.name,
+				progress_label=getTranslation(30001),
+				progress_value=torrentInfo.progress,
+				size_label=getTranslation(30002),
+				size_value=torrentInfo.getStrSize(),
+				down_label=getTranslation(30003),
+				down_value=torrentInfo.downloadPayloadRate,
+				up_label=getTranslation(30004),
+				up_value=torrentInfo.uploadPayloadRate,
+				eta_label=getTranslation(30005),
+				eta_value=torrentInfo.getStrEta(),
+			)
+			addTorrent(name, url, mode, thumb, torrentInfo.torrentId, torrentInfo.timeAdded)
 			mode = mode + 1
 	#xbmc.executebuiltin('Container.SetViewMode(500)') # 55 - List; 
 	xbmcplugin.addSortMethod(addon_handle, xbmcplugin.SORT_METHOD_DATEADDED)
