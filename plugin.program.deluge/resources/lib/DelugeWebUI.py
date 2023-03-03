@@ -28,6 +28,7 @@ class DelugeWebUI(DelugeWebUIJson):
             torrentInfo.uploadPayloadRate = round(float(jsonTorrentInfo['upload_payload_rate']) / (1024), 2)
             torrentInfo.downloadPayloadRate = round(float(jsonTorrentInfo['download_payload_rate']) / (1024), 2)
             torrentInfo.eta = int(jsonTorrentInfo['eta'])
+            torrentInfo.timeAdded = int(jsonTorrentInfo['time_added'])
             if 'label' in jsonTorrentInfo:
                 torrentInfo.label = jsonTorrentInfo['label']
             torrentList.append(torrentInfo)
