@@ -121,3 +121,19 @@ msgctxt "#32102"
 msgid "Do you want to change settings?"
 msgstr "Do you want to change settings?"
 
+msgctxt "#32200"
+msgid "Downloading"
+msgstr "Downloading"
+
+msgctxt "#32201"
+msgid "Queued"
+msgstr "Queued"
+
+msgctxt "#32202"
+msgid "Paused"
+msgstr "Paused"
+
+msgctxt "#32203"
+msgid "Seeding"
+msgstr "Seeding"
+

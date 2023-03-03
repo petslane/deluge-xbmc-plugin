@@ -51,6 +51,16 @@ def isTorrentListable(torrent, stateName):
 		return True
 	return False
 
+def translateTorrentState(state):
+	if state == 'Downloading':
+		return getTranslation(32200) or 'Downloading'
+	elif state == 'Queued':
+		return getTranslation(32201) or 'Queued'
+	elif state == 'Paused':
+		return getTranslation(32202) or 'Paused'
+	elif state == 'Seeding':
+		return getTranslation(32203) or 'Seeding'
+
 def listTorrents(torrentList, stateName):
 	restoreSession()
 	mode = 1
@@ -67,8 +77,9 @@ def listTorrents(torrentList, stateName):
 			else:
 				thumb = os.path.join(__icondir__, 'unknown.png')
 			url = baseurl
-			name = '[B]{name}[/B]   [LIGHT]{progress_label} {progress_value}% | {size_label} {size_value} | {down_label} {down_value} | {up_label} {up_value} | {eta_label} {eta_value}[/LIGHT]'.format(
+			name = '[B]{name}[/B]   [LIGHT]{state} | {progress_label} {progress_value}% | {size_label} {size_value} | {down_label} {down_value} | {up_label} {up_value} | {eta_label} {eta_value}[/LIGHT]'.format(
 				name=torrentInfo.name,
+				state=translateTorrentState(torrentInfo.state),
 				progress_label=getTranslation(30001),
 				progress_value=torrentInfo.progress,
 				size_label=getTranslation(30002),
