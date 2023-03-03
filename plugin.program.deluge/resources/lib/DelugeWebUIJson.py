@@ -4,8 +4,12 @@ Created on Mar 29, 2012
 @author: Iulian Postaru
 '''
 
-import json, urllib2
+from http.cookiejar import LWPCookieJar
+import urllib.request
+
+import json
 from utils import unGzip
+import xbmc
 
 class DelugeWebUIJson(object):
     jsonid = 1
@@ -17,26 +21,40 @@ class DelugeWebUIJson(object):
     
     #TODO: to add an try catch to return None when connection is unsucsessfull
     def sendReq(self, methodName, params, jsonid, cookie):
-        json_dict = {'method':methodName,'params':params,'id':jsonid}
-        data = json.dumps(json_dict)
-        req = urllib2.Request(self.url, data, {'Content-Type': 'application/json'})
-        req.add_header('Accept-encoding', 'gzip')
+        json_data = {'method':methodName,'params':params,'id':jsonid}
+        headers = {
+            'Content-type': 'application/json',
+            'Accept-encoding': 'gzip'
+        }
         if cookie is not None :
-            req.add_header('cookie', cookie)
-        res = urllib2.urlopen(req)
-        DelugeWebUIJson.cookie = res.headers.get('Set-Cookie')
-        encoding = res.headers.getheader('Content-Encoding')
-        content = res.read()
-        res.close()
+            headers['cookie'] = cookie
+
+        data = json.dumps(json_data).encode('utf-8')
+        headers['Content-Length'] = len(data)
+        req = urllib.request.Request(
+            self.url,
+            headers=headers,
+            method="POST"
+        )
+        response = urllib.request.urlopen(req, data)
+        newCookie = response.getheader('Set-Cookie')
+        if newCookie:
+            self.cookie = newCookie
+
+        content = response.read()
+        encoding = response.getheader('Content-Encoding')
         if encoding == 'gzip' :
-            return unGzip(content)
-        return content
+            return unGzip(content).decode('utf-8')
+
+        return content.decode('utf-8')
     
     def getJsonId(self):
         self.jsonid += 1
         return self.jsonid
     
     def isResultOk(self, jsonRes):
+        if jsonRes is None:
+            return False
         jsonData = json.loads(jsonRes)
         if jsonData['error'] == None :
             return jsonData['result']
@@ -105,11 +123,9 @@ class DelugeWebUIJson(object):
     def resumeTorrent(self, torrentId):
         return self.isResultOk(self.sendReq('core.resume_torrent', [[torrentId]], self.getJsonId(), self.cookie))
     
-    #TODO: is not working, to find out the params which should be passed
-    #{"method":"core.remove_torrent","params":["60d5d82328b4547511fdeac9bf4d0112daa0ce00", false],"id":2}
-    #{"method":"core.remove_torrent","params":[["60d5d82328b4547511fdeac9bf4d0112daa0ce00"],false],"id":2}
+    #{"method":"core.remove_torrents","params":[["60d5d82328b4547511fdeac9bf4d0112daa0ce00"],false],"id":2}
     def removeTorrent(self, torrentId, removeData):
-        return self.sendReq('core.remove_torrent', [torrentId,removeData], self.getJsonId(), self.cookie)
+        return self.sendReq('core.remove_torrents', [[torrentId],removeData], self.getJsonId(), self.cookie)
     
     def getLabels(self):
         jsonRes = self.sendReq('label.get_labels', [], self.getJsonId(), self.cookie)

@@ -1,0 +1,123 @@
+﻿msgid ""
+msgstr ""
+
+msgctxt "#30001"
+msgid "Finisat:"
+msgstr "Finisat:"
+
+msgctxt "#30002"
+msgid "Volum:"
+msgstr "Volum:"
+
+msgctxt "#30003"
+msgid "D:"
+msgstr "D:"
+
+msgctxt "#30004"
+msgid "Î:"
+msgstr "Î:"
+
+msgctxt "#30005"
+msgid "ETA:"
+msgstr "ETA:"
+
+msgctxt "#30006"
+msgid "o"
+msgstr "o"
+
+msgctxt "#30007"
+msgid "m"
+msgstr "m"
+
+msgctxt "#30009"
+msgid "Fără Etichetă"
+msgstr "Fără Etichetă"
+
+msgctxt "#30100"
+msgid "Adresă IP:"
+msgstr "Adresă IP:"
+
+msgctxt "#30101"
+msgid "Port:"
+msgstr "Port:"
+
+msgctxt "#30103"
+msgid "Parolă:"
+msgstr "Parolă:"
+
+msgctxt "#30104"
+msgid "Cale torent:"
+msgstr "Cale torent:"
+
+msgctxt "#30105"
+msgid "Numărul minim de torente pentru gruparea după statut:"
+msgstr "Numărul minim de torente pentru gruparea după statut:"
+
+msgctxt "#30106"
+msgid "Confirmă ștergerea torentului:"
+msgstr "Confirmă ștergerea torentului:"
+
+msgctxt "#32001"
+msgid "Selectează funcție:"
+msgstr "Selectează funcție:"
+
+msgctxt "#32002"
+msgid "Pauză"
+msgstr "Pauză"
+
+msgctxt "#32003"
+msgid "Reluare"
+msgstr "Reluare"
+
+msgctxt "#32007"
+msgid "Șterge torent"
+msgstr "Șterge torent"
+
+msgctxt "#32008"
+msgid "Șterge torent și date"
+msgstr "Șterge torent și date"
+
+msgctxt "#32019"
+msgid "Setează etichetă"
+msgstr "Setează etichetă"
+
+msgctxt "#32021"
+msgid "Elimină torent"
+msgstr "Elimină torent"
+
+msgctxt "#32022"
+msgid "Vrei într-adevăr să elimini acest torrent?"
+msgstr "Vrei într-adevăr să elimini acest torrent?"
+
+msgctxt "#32020"
+msgid "Selectează etichetă:"
+msgstr "Selectează etichetă:"
+
+msgctxt "#32009"
+msgid "Viteză maximă de încărcare:"
+msgstr "Viteză maximă de încărcare:"
+
+msgctxt "#32010"
+msgid "Viteză maximă de descărcare:"
+msgstr "Viteză maximă de descărcare:"
+
+msgctxt "#32011"
+msgid "Pauză Toate"
+msgstr "Pauză Toate"
+
+msgctxt "#32012"
+msgid "Reia Toate"
+msgstr "Reia Toate"
+
+msgctxt "#32100"
+msgid "Eroare!"
+msgstr "Eroare!"
+
+msgctxt "#32101"
+msgid "Nu s-a reușit să se conecteze la serviciu."
+msgstr "Nu s-a reușit să se conecteze la serviciu."
+
+msgctxt "#32102"
+msgid "Doriți să schimbați setările?"
+msgstr "Doriți să schimbați setările?"
+

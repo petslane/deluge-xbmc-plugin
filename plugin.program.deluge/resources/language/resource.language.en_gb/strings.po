@@ -1,0 +1,123 @@
+msgid ""
+msgstr ""
+
+msgctxt "#30001"
+msgid "Done:"
+msgstr "Done:"
+
+msgctxt "#30002"
+msgid "Size:"
+msgstr "Size:"
+
+msgctxt "#30003"
+msgid "D:"
+msgstr "D:"
+
+msgctxt "#30004"
+msgid "U:"
+msgstr "U:"
+
+msgctxt "#30005"
+msgid "ETA:"
+msgstr "ETA:"
+
+msgctxt "#30006"
+msgid "h"
+msgstr "h"
+
+msgctxt "#30007"
+msgid "m"
+msgstr "m"
+
+msgctxt "#30009"
+msgid "No Label"
+msgstr "No Label"
+
+msgctxt "#30100"
+msgid "IP Address:"
+msgstr "IP Address:"
+
+msgctxt "#30101"
+msgid "Port:"
+msgstr "Port:"
+
+msgctxt "#30103"
+msgid "Password:"
+msgstr "Password:"
+
+msgctxt "#30104"
+msgid "Torrent Path:"
+msgstr "Torrent Path:"
+
+msgctxt "#30105"
+msgid "Minimum count of torrents to by grouped by status:"
+msgstr "Minimum count of torrents to by grouped by status:"
+
+msgctxt "#30106"
+msgid "Confirm torrent removing:"
+msgstr "Confirm torrent removing:"
+
+msgctxt "#32001"
+msgid "Perform function:"
+msgstr "Perform function:"
+
+msgctxt "#32002"
+msgid "Pause"
+msgstr "Pause"
+
+msgctxt "#32003"
+msgid "Resume"
+msgstr "Resume"
+
+msgctxt "#32007"
+msgid "Remove"
+msgstr "Remove"
+
+msgctxt "#32008"
+msgid "Remove torrent and data"
+msgstr "Remove torrent and data"
+
+msgctxt "#32019"
+msgid "Set Label"
+msgstr "Set Label"
+
+msgctxt "#32021"
+msgid "Remove Torrent"
+msgstr "Remove Torrent"
+
+msgctxt "#32022"
+msgid "Do you really want to remove this torrent?"
+msgstr "Do you really want to remove this torrent?"
+
+msgctxt "#32020"
+msgid "Select label:"
+msgstr "Select label:"
+
+msgctxt "#32009"
+msgid "Enter Max. Upload Speed:"
+msgstr "Enter Max. Upload Speed:"
+
+msgctxt "#32010"
+msgid "Enter Max. Download Speed:"
+msgstr "Enter Max. Download Speed:"
+
+msgctxt "#32011"
+msgid "Pause All"
+msgstr "Pause All"
+
+msgctxt "#32012"
+msgid "Resume All"
+msgstr "Resume All"
+
+msgctxt "#32100"
+msgid "Error!"
+msgstr "Error!"
+
+msgctxt "#32101"
+msgid "Fail to connect to daemon."
+msgstr "Fail to connect to daemon."
+
+msgctxt "#32102"
+msgid "Do you want to change settings?"
+msgstr "Do you want to change settings?"
+

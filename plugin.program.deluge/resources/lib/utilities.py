@@ -1,4 +1,6 @@
-import urllib, urllib2, cookielib, sys, os
+from http.cookiejar import LWPCookieJar
+import urllib.request
+import sys, os
 from base64 import b64encode
 import xbmc
 
@@ -52,36 +54,42 @@ def MultiPart(fields,files,ftype) :
 
 class Client(object):
     def __init__(self, address='localhost', port='8080', user=None, password=None):
-        base_url = 'http://' + address + ':' + port
-        self.url = base_url + '/gui/'
-        if user:
-            password_manager = urllib2.HTTPPasswordMgrWithDefaultRealm()
-            password_manager.add_password(realm=None, uri=self.url, user=user, passwd=password)
-            self.MyCookies = cookielib.LWPCookieJar()
-            if os.path.isfile(COOKIEFILE) : self.MyCookies.load(COOKIEFILE)
-            opener = urllib2.build_opener(
-                urllib2.HTTPCookieProcessor(self.MyCookies)
-                , urllib2.HTTPBasicAuthHandler(password_manager)
-                )
-            opener.addheaders = [('User-Agent', 'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1) chromeframe/4.0')]
-            urllib2.install_opener(opener)
+        self.url = "http://%s:%s/gui/" % (address, port)
+
+        self.jar = LWPCookieJar(COOKIEFILE)
+        try:
+            self.jar.load()
+        except:
+            pass
+
+        cookieHandler = urllib.request.HTTPCookieProcessor(self.jar)
+        passwordManager = urllib.request.HTTPPasswordMgrWithDefaultRealm()
+        passwordManager.add_password(None, self.url, user, password)
+        authHandler = urllib.request.HTTPBasicAuthHandler(passwordManager)
+        self.opener = urllib.request.build_opener([authHandler, cookieHandler])
+
 
     def HttpCmd(self, urldta, postdta=None, content=None):
         xbmc.log( "%s::HttpCmd - url: %s" % ( __addonname__, urldta ), xbmc.LOGDEBUG )
-        ## Standard code
+        
+        headers = {
+            'User-Agent': 'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1) chromeframe/4.0'
+        }
+        if content != None:
+            headers['content-type'] = content
+            headers['Content-length'] = len(postdta)
 
-        req = urllib2.Request(urldta,postdta)
+        req = urllib.request.Request(
+            urldta, 
+            data=postdta, 
+            headers=headers,
+            method="POST"
+        )
 
-        ## Process only if Upload..
-        if content != None   :
-                req.add_header('Content-Type',content)
-                req.add_header('Content-Length',str(len(postdta)))
+        response = urllib.request.urlopen(req, timeout=10)
+        
+        link = response.read().decode('utf-8')
 
-        response = urllib2.urlopen(req)
-        link=response.read()
-        xbmc.log( "%s::HttpCmd - data: %s" % ( __addonname__, str(link) ), xbmc.LOGDEBUG )
-        response.close()
-        self.MyCookies.save(COOKIEFILE)
+        self.jar.save(ignore_discard=True)
+
         return link
-
-
