@@ -1,3 +1,8 @@
+[B]Version 1.0.0 (2.03.2023)[/B]
+- Updated for Kodi/XBMC v19+ (python 3)
+- Some UI changes
+- Fix removing torrents
+
 [B]Version 0.5.1 (29.06.2015)[/B]
 - Updated for Kodi/XBMC v13+
 - Fixed errors:

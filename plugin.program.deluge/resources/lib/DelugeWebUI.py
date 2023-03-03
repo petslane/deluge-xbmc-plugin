@@ -10,6 +10,7 @@ from Filter import Filter
 from FilterList import FilterList
 from TorrentList import TorrentList
 import json
+import xbmc
 
 class DelugeWebUI(DelugeWebUIJson):
         
@@ -22,7 +23,7 @@ class DelugeWebUI(DelugeWebUIJson):
             jsonTorrentInfo = jdata['result']['torrents'][torrentId]
             torrentInfo.torrentId = torrentId
             torrentInfo.state = jsonTorrentInfo['state']
-            torrentInfo.name = jsonTorrentInfo['name'].encode('utf8')
+            torrentInfo.name = jsonTorrentInfo['name']
             torrentInfo.progress = int(jsonTorrentInfo['progress'])
             torrentInfo.totalSize = int(jsonTorrentInfo['total_size'])
             torrentInfo.uploadPayloadRate = round(float(jsonTorrentInfo['upload_payload_rate']) / (1024), 2)
@@ -38,7 +39,7 @@ class DelugeWebUI(DelugeWebUIJson):
         torrentInfoList = self.getTorrentList()
         resultTorrentInfoList = TorrentList()
         for torrentInfo in torrentInfoList:
-            if torrentInfo.label == labelName:
+            if torrentInfo.label == labelName or labelName == 'All' or labelName is None and torrentInfo.label == '':
                 resultTorrentInfoList.append(torrentInfo)
         return resultTorrentInfoList
     
@@ -85,7 +86,7 @@ class DelugeWebUI(DelugeWebUIJson):
         filterList = []
         if filterType in jdata['result']['filters']:
             for strFilter in jdata['result']['filters'][filterType]:
-                filterList.append(Filter(strFilter[0], int(strFilter[1])))
+                filterList.append(Filter(strFilter[0], int(strFilter[1]), filterType))
         return filterList
     
     def getStateFilters(self):

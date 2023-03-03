@@ -30,9 +30,9 @@ class TorrentInfo(object):
     def getStrSize(self):
         size = int(self.totalSize) / (1024*1024)
         if (size >= 1024.00):
-            size_str = str(round(size / 1024.00,2)) +"Gb"
+            size_str = str(round(size / 1024.00, 1)) +"Gb"
         else:
-            size_str = str(size) + "Mb"
+            size_str = str(round(size, 1)) + "Mb"
         return size_str
 
 
@@ -48,4 +48,4 @@ class TorrentInfo(object):
         return remain_str
     
     def __str__(self):
-        return self.name;
+        return '%s' % self.name
